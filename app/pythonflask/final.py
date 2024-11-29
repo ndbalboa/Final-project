@@ -10,7 +10,7 @@ import cv2
 from docx import Document
 
 # Set up your OpenAI API key
-openai.api_key = "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"
+openai.api_key = ""
 
 # Initialize Flask app
 app = Flask(__name__)
