@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Document;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use App\Models\DocumentEmployeeName; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Models\AcademicRank;
+use App\Models\UniversityPosition;
+use App\Models\Department;
 
 class EmployeeController extends Controller
 {
@@ -204,39 +208,56 @@ class EmployeeController extends Controller
      */
     protected function getValidatedData(Request $request)
     {
-        return $request->only([
-            'lastName',
-            'firstName',
-            'middleName',
-            'sex',
-            'civilStatus',
-            'dateOfBirth',
-            'religion',
-            'emailAddress',
-            'phoneNumber',
-            'gsisId',
-            'pagibigId',
-            'philhealthId',
-            'sssNo',
-            'agencyEmploymentNo',
-            'taxId',
-            'academicRank',
-            'universityPosition',
-            'permanent_street',
-            'permanent_barangay',
-            'permanent_city',
-            'permanent_province',
-            'permanent_country',
-            'permanent_zipcode',
-            'residential_street',
-            'residential_barangay',
-            'residential_city',
-            'residential_province',
-            'residential_country',
-            'residential_zipcode',
-            'department'
-        ]);
+        try {
+            // Create a new Employee instance with the validated data
+            $employee = Employee::create([
+                'lastName' => $request->lastName,
+                'firstName' => $request->firstName,
+                'middleName' => $request->middleName,
+                'sex' => $request->sex,
+                'civilStatus' => $request->civilStatus,
+                'dateOfBirth' => $request->dateOfBirth,
+                'religion' => $request->religion,
+                'emailAddress' => $request->emailAddress,
+                'phoneNumber' => $request->phoneNumber,
+                'gsisId' => $request->gsisId,
+                'pagibigId' => $request->pagibigId,
+                'philhealthId' => $request->philhealthId,
+                'sssNo' => $request->sssNo,
+                'agencyEmploymentNo' => $request->agencyEmploymentNo,
+                'taxId' => $request->taxId,
+                'academicRank' => $request->academicRank,
+                'universityPosition' => $request->universityPosition,
+                'permanent_street' => $request->permanent_street,
+                'permanent_barangay' => $request->permanent_barangay,
+                'permanent_city' => $request->permanent_city,
+                'permanent_province' => $request->permanent_province,
+                'permanent_country' => $request->permanent_country,
+                'permanent_zipcode' => $request->permanent_zipcode,
+                'residential_street' => $request->residential_street,
+                'residential_barangay' => $request->residential_barangay,
+                'residential_city' => $request->residential_city,
+                'residential_province' => $request->residential_province,
+                'residential_country' => $request->residential_country,
+                'residential_zipcode' => $request->residential_zipcode,
+                'department' => $request->department,
+            ]);
+    
+            // Return a JSON response with a success message
+            return response()->json([
+                'message' => 'Employee data created successfully.',
+                'employee' => $employee,
+            ], 201);
+        } catch (\Exception $e) {
+            // Return a JSON response with an error message if an exception is caught
+            return response()->json([
+                'error' => 'Failed to create employee data. Please try again.',
+                'exception' => $e->getMessage(), // Optional, include only if needed for debugging
+            ], 500);
+        }
     }
+    
+    
 
     /**
      * Handle profile image storage.
@@ -450,6 +471,32 @@ public function restore($id)
 
         return response()->json($documents);
     }
+
+        public function listRanks(): JsonResponse
+        {
+            return response()->json(AcademicRank::select('id', 'rank')->get());
+        }
+    
+        /**
+         * Fetch all university positions with id and name.
+         *
+         * @return JsonResponse
+         */
+        public function getUniversityPositions(): JsonResponse
+        {
+            return response()->json(UniversityPosition::select('id', 'position')->get());
+        }
+    
+        /**
+         * Fetch all departments with id and name.
+         *
+         * @return JsonResponse
+         */
+        public function getDepartments(): JsonResponse
+        {
+            return response()->json(Department::select('id', 'department')->get());
+        }
+    
 
 
 }

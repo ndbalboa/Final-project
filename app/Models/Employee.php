@@ -70,4 +70,21 @@ class Employee extends Model
     {
         return $this->hasMany(Mail::class, 'to', 'id');
     }
+        // Define the relationship with the AcademicRank model
+        public function academicRank()
+        {
+            return $this->belongsTo(AcademicRank::class);
+        }
+    
+        // Define the relationship with the UniversityPosition model
+        public function universityPosition()
+        {
+            return $this->belongsTo(UniversityPosition::class);
+        }
+    
+        // Define the relationship with the Department model
+        public function department()
+        {
+            return $this->belongsTo(Department::class);
+        }
 }

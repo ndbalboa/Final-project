@@ -14,6 +14,9 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\UploadDocumentController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DatabaseBackupController;
+use App\Http\Controllers\AcademicRankController;
+use App\Http\Controllers\UniversityPositionController;
 
 
 // Authentication Routes
@@ -91,13 +94,37 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('{id}/download', [ReportController::class, 'download']); // Download report
     Route::delete('/reports/{id}', [ReportController::class, 'destroy']); // Delete report
 
-
+    Route::get('/mails/count', [MailController::class, 'count']);
+    Route::get('/mails/details', [MailController::class, 'details']);
     Route::post('/mails', [MailController::class, 'store']);
     Route::get('/getmails', [MailController::class, 'index']);
     Route::get('/mails/{id}', [MailController::class, 'show']); // Get a single mail by ID
     Route::put('/mails/{id}', [MailController::class, 'update']); // Update a mail
     Route::delete('/mails/{id}', [MailController::class, 'destroy']); // Delete a mail
     Route::get('/employeeselect', [MailController::class, 'getEmployees']); // Fetch employees
+
+    Route::get('/academic-ranks', [AcademicRankController::class, 'index']);
+    Route::post('/store/academic-ranks', [AcademicRankController::class, 'store']);
+    Route::put('/update/academic-ranks/{id}', [AcademicRankController::class, 'update']);
+    Route::delete('/delete/academic-ranks/{id}', [AcademicRankController::class, 'destroy']);
+
+    Route::post('/store/university-positions', [UniversityPositionController::class, 'store']);
+    Route::get('/university-positions', [UniversityPositionController::class, 'index']);
+    Route::put('/update/university-positions/{id}', [UniversityPositionController::class, 'update']);
+    Route::delete('/delete/university-positions/{id}', [UniversityPositionController::class, 'destroy']);
+
+    Route::post('/store/departments', [DepartmentController::class, 'store']);
+    Route::get('/departments', [DepartmentController::class, 'index']);
+    Route::put('/update/departments/{id}', [DepartmentController::class, 'update']);
+    Route::delete('/delete/departments/{id}', [DepartmentController::class, 'destroy']);
+
+    Route::get('/list/academic-ranks', [EmployeeController::class, 'listRanks']);
+    Route::get('/list/university-positions', [EmployeeController::class, 'getUniversityPositions']);
+    Route::get('/list/departments', [EmployeeController::class, 'getDepartments']);
+
+    //for backup
+    Route::post('/backup-database', [DatabaseBackupController::class, 'backup']);
+    Route::post('/restore-database', [DatabaseBackupController::class, 'restore']);
 
 
 
@@ -125,7 +152,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/department/document-types', [DepartmentController::class, 'indexs']);
     Route::get('/department-documents', [DepartmentController::class, 'getDepartmentDocuments']);
     Route::get('/department-documentstype', [DepartmentController::class, 'getDepartmentDocumentTypes']);
-
 
 
     

@@ -204,12 +204,17 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="">
+              <router-link class="nav-link" to="/admin-dashboard/departments">
+                Departments
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/admin-dashboard/universityPosition/list">
                 University Position
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="">
+              <router-link class="nav-link" to="/admin-dashboard/academicRank/list">
                 Academic Rank
               </router-link>
             </li>

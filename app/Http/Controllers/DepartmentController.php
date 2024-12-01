@@ -5,6 +5,7 @@ use App\Models\Document;
 use App\Models\DocumentType;
 use App\Models\Employee;
 use App\Models\User;
+use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -72,6 +73,75 @@ class DepartmentController extends Controller
         return response()->json($documents);
     }
     
-    
+    public function store(Request $request)
+    {
+        $request->validate([
+            'department' => 'required|string|unique:departments,department|max:255',
+        ]);
+
+        try {
+            $department = Department::create([
+                'department' => $request->department,
+            ]);
+
+            return response()->json([
+                'message' => 'Department created successfully.',
+                'department' => $department,
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to create department. Please try again.',
+            ], 500);
+        }
+    }
+
+    // Method to fetch all departments
+    public function index()
+    {
+        $departments = Department::all();
+        return response()->json(['departments' => $departments]);
+    }
+
+    // Method to update an existing department
+    public function update(Request $request, $id)
+    {
+        $department = Department::findOrFail($id);
+
+        $request->validate([
+            'department' => 'required|string|unique:departments,department,' . $id . '|max:255',
+        ]);
+
+        try {
+            $department->update([
+                'department' => $request->department,
+            ]);
+
+            return response()->json([
+                'message' => 'Department updated successfully.',
+                'department' => $department,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to update department. Please try again.',
+            ], 500);
+        }
+    }
+
+    // Method to delete a department
+    public function destroy($id)
+    {
+        try {
+            $department = Department::findOrFail($id);
+            $department->delete();
+
+            return response()->json([
+                'message' => 'Department deleted successfully.',
+            ], 204);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to delete department. Please try again.',
+            ], 500);
+        }
+    }
     
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Office Orders</h1>
+    <h1>Special Orders</h1>
 
     <!-- Search Bar and Top Bar Container -->
     <div class="search-and-top-bar">
@@ -122,13 +122,13 @@ export default {
     },
   },
   mounted() {
-    this.fetchDocuments(2);//Special Order
+    this.fetchDocuments(2); // Fetch documents for the document type ID = 1 (Travel Order)
   },
   methods: {
     // Fetch documents from the API
     async fetchDocuments(documentTypeId) {
       try {
-        const response = await axios.get(`/api/admin/list/documents/${documentTypeId}`);
+        const response = await axios.get(`/api/listdocuments/type/${documentTypeId}`);
         this.documents = response.data;
       } catch (error) {
         console.error("Error fetching documents:", error);

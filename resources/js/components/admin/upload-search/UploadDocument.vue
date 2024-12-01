@@ -109,9 +109,21 @@
               class="form-control"
               placeholder="Enter employee name"
             />
-            <button type="button" @click="removeEmployee(index)">Remove</button>
+            <button
+              type="button"
+              class="btn-remove"
+              @click="removeEmployee(index)"
+            >
+              <i class="fas fa-minus-circle"></i>
+            </button>
           </div>
-          <button type="button" @click="addEmployee">Add Employee</button>
+          <button
+            type="button"
+            class="btn-add"
+            @click="addEmployee"
+          >
+            <i class="fas fa-plus-circle"></i>
+          </button>
         </div>
 
         <!-- Student Names -->
@@ -128,9 +140,21 @@
               class="form-control"
               placeholder="Enter student name"
             />
-            <button type="button" @click="removeStudent(index)">Remove</button>
+            <button
+              type="button"
+              class="btn-remove"
+              @click="removeStudent(index)"
+            >
+              <i class="fas fa-minus-circle"></i>
+            </button>
           </div>
-          <button type="button" @click="addStudent">Add Student</button>
+          <button
+            type="button"
+            class="btn-add"
+            @click="addStudent"
+          >
+            <i class="fas fa-plus-circle"></i>
+          </button>
         </div>
 
         <!-- Subject and Description -->
@@ -159,6 +183,7 @@
 </template>
 
 <script>
+// Importing Font Awesome for icons
 import axios from "axios";
 
 export default {
@@ -289,5 +314,30 @@ export default {
 }
 .form-group {
   margin-bottom: 1rem;
+}
+.name-group {
+  display: flex;
+  align-items: center;
+}
+.name-group input {
+  flex: 1;
+  margin-right: 10px;
+}
+.btn-add,
+.btn-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #007bff;
+  vertical-align: middle;
+}
+.btn-add {
+  margin-top: 10px;
+  display: block;
+  text-align: center;
+}
+.btn-remove {
+  margin-left: 10px;
 }
 </style>

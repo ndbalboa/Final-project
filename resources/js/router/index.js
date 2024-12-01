@@ -67,6 +67,9 @@ import SecPageAddDocumentType from '../components/secretary/SecPageAddDocumentTy
 import DepartmentOtherDocuments from '../components/department/DepartmentOtherDocuments.vue';
 import DepartmentSpecial from '../components/department/DepartmentSpecial.vue';
 import DepartmentOffice from '../components/department/DepartmentOffice.vue';
+import AcademicRank from '../components/admin/employees/AcademicRank.vue';
+import UniversityPosition from '../components/admin/employees/UniversityPosition.vue';
+import Departments from '../components/admin/employees/Departments.vue';
 
 function isAuthenticated() {
   return !!localStorage.getItem('token');
@@ -117,7 +120,9 @@ const routes = [
       { path: 'settings', component: Settings },
       { path: 'mail/list', component: MailList },
       { path: 'mail/new', component: NewMail },
-
+      { path: 'academicRank/list', name: 'AcademicRankList', component: AcademicRank },
+      { path: 'universityPosition/list', name: 'UniversityPositionList', component: UniversityPosition},
+      { path: 'departments', name: 'Departments', component: Departments},
 
 
     ],
@@ -153,6 +158,8 @@ const routes = [
       { path: 'officeOrderReports', name: 'SecPageGenerateOfficeReports', component: GenerateOfficeReports},
       { path: 'generateTravelReports', name: 'SecPageGenerateTravelReports', component: GenerateTravelReports},
       { path: 'generateSpecialReports', name: 'SecPageGenerateSpecialReports', component: GenerateSpecialReports},
+      { path: 'academicRank/list', name: 'SecPageAcademicRankList', component: AcademicRank },
+      { path: 'universityPosition/list', name: 'SecPageUniversityPositionList', component: UniversityPosition},
       { path: 'mail/list', component: SecPageMailList },
       { path: 'mail/new', component: SecPageNewMail },
       { path: 'adddocumenttype', component: SecPageAddDocumentType},

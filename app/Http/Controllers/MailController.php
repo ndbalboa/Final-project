@@ -82,4 +82,16 @@ class MailController extends Controller
 
         return response()->json(['message' => 'Mail deleted successfully']);
     }
+
+    public function count()
+    {
+        $totalMails = Mail::count();
+        return response()->json(['total' => $totalMails]);
+    }
+
+    public function details()
+    {
+        $mails = Mail::all();
+        return response()->json(['mails' => $mails]);
+    }
 }

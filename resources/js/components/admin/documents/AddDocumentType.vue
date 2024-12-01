@@ -128,9 +128,11 @@ export default {
         this.documentType = ""; // Reset form field
         this.editingDocumentType = null; // Reset the editing state
         this.fetchDocumentTypes(); // Fetch the updated list of document types
+        
         // Close the modal after success
         const modal = new bootstrap.Modal(document.getElementById('addDocumentTypeModal'));
-        modal.hide();
+        modal.hide(); // Close the modal programmatically
+
       } catch (error) {
         this.errorMessage = "Failed to process document type. Please try again.";
       }

@@ -4,10 +4,13 @@
       <!-- Documents Section -->
       <div class="col-lg-4">
         <div class="card bg-primary text-white">
-          <div class="card-body">
-            <h5>Total Number of Documents</h5>
-            <h2>{{ totalDocuments }}</h2>
-            <a href="#" class="btn btn-outline-light btn-sm mt-3">View Details</a>
+          <div class="card-body d-flex align-items-center">
+            <i class="fas fa-file-alt fa-3x me-3"></i>
+            <div>
+              <h5>Total Number of Documents</h5>
+              <h2>{{ totalDocuments }}</h2>
+              <a href="#" class="btn btn-outline-light btn-sm mt-3">View Details</a>
+            </div>
           </div>
         </div>
         <div class="mt-3">
@@ -26,10 +29,13 @@
       <!-- Mail Section -->
       <div class="col-lg-4">
         <div class="card bg-warning text-white">
-          <div class="card-body">
-            <h5>Number of Mails</h5>
-            <h2>50</h2>
-            <a href="#" class="btn btn-outline-light btn-sm mt-3">View Details</a>
+          <div class="card-body d-flex align-items-center">
+            <i class="fas fa-envelope fa-3x me-3"></i>
+            <div>
+              <h5>Number of Mails</h5>
+              <h2>50</h2>
+              <a href="#" class="btn btn-outline-light btn-sm mt-3">View Details</a>
+            </div>
           </div>
         </div>
       </div>
@@ -37,10 +43,13 @@
       <!-- Logged Activities Section -->
       <div class="col-lg-4">
         <div class="card bg-danger text-white">
-          <div class="card-body">
-            <h5>Logged Activities Today</h5>
-            <h2>{{ loginCountToday }}</h2>
-            <a href="#" class="btn btn-outline-light btn-sm mt-3">View Details</a>
+          <div class="card-body d-flex align-items-center">
+            <i class="fas fa-user-clock fa-3x me-3"></i>
+            <div>
+              <h5>Logged Activities Today</h5>
+              <h2>{{ loginCountToday }}</h2>
+              <a href="#" class="btn btn-outline-light btn-sm mt-3">View Details</a>
+            </div>
           </div>
         </div>
       </div>

@@ -47,31 +47,7 @@
           <div class="col-md-4 mb-3">
             <label for="department">Department</label>
             <select class="form-control" id="department" v-model="department">
-              <option>Supply and Property Management Office</option>
-              <option>Physical Plants and Facilities Office</option>
-              <option>General Services Office</option>
-              <option>HRDC Office</option>
-              <option>Medical Service Office</option>
-              <option>Quality Management System on Administrative Services Office</option>
-              <option>Human Resource Management Office</option>
-              <option>IT Support Office</option>
-              <option>Security Office</option>
-              <option>Income Generating Office</option>
-              <option>Integrated Multimedia Office</option>
-              <option>Housing Service Office</option>
-              <option>Accounting Office</option>
-              <option>Budget Office</option>
-              <option>Cash Management Office</option>
-              <option>Guidance Office</option>
-              <option>Sports Development Office</option>
-              <option>Student Organization and Services Office</option>
-              <option>Scholarship and Financial Assistance Office</option>
-              <option>Students with Special Needs Office</option>
-              <option>Students Performing Arts Office</option>
-              <option>Office of the Vice President for Research, Innovation and Extension</option>
-              <option>Research Ethics Office</option>
-              <option>Community Extension Services Office</option>
-              <option>Curriculum Development Office</option>
+              <option v-for="dept in departments" :key="dept.id" :value="dept.department">{{ dept.department }}</option>
             </select>
           </div>
         </div>
@@ -123,12 +99,13 @@
         firstName: "",
         lastName: "",
         email: "",
-        department: "",
+        department: "", // Department will be populated with fetched data
         username: "",
         password: "",
         confirmPassword: "",
         successMessage: "",
         errorMessage: "",
+        departments: [], // Array to store fetched departments
       };
     },
     methods: {
@@ -159,6 +136,18 @@
           this.successMessage = "";
         }
       },
+  
+      // Method to fetch departments from the backend API
+      async fetchDepartments() {
+        try {
+          const response = await axios.get("/api/admin/list/departments");
+          this.departments = response.data; // Store fetched departments in the departments array
+        } catch (error) {
+          console.error("Error fetching departments:", error);
+        }
+      },
+  
+      // Method to clear form fields
       clearForm() {
         this.firstName = "";
         this.lastName = "";
@@ -169,8 +158,12 @@
         this.confirmPassword = "";
       },
     },
+    mounted() {
+      this.fetchDepartments(); // Fetch departments when the component is mounted
+    },
   };
   </script>
+  
   
   <style scoped>
   /* Maintain existing styles */

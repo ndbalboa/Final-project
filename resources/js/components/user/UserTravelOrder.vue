@@ -122,13 +122,13 @@ export default {
     },
   },
   mounted() {
-    this.fetchDocuments(1); // Fetch documents where document_type_id = 1 (Travel Order)
+    this.fetchDocuments(1); // Fetch documents for the document type ID = 1 (Travel Order)
   },
   methods: {
     // Fetch documents from the API
     async fetchDocuments(documentTypeId) {
       try {
-        const response = await axios.get(`/api/admin/list/documents/${documentTypeId}`);
+        const response = await axios.get(`/api/listdocuments/type/${documentTypeId}`);
         this.documents = response.data;
       } catch (error) {
         console.error("Error fetching documents:", error);

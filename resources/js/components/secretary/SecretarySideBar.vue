@@ -140,12 +140,12 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="">
+              <router-link class="nav-link" to="/secretary-dashboard/universityPosition/list">
                 University Position
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="">
+              <router-link class="nav-link" to="/secretary-dashboard/academicRank/list">
                 Academic Rank
               </router-link>
             </li>

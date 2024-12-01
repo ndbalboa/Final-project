@@ -92,62 +92,31 @@
       </div>
 <!-- Academic and University Information -->
 <div class="row">
-  <!-- Academic Rank -->
-  <div class="col-md-4 mb-3">
-    <label for="academicRank">Academic Rank</label>
-    <select class="form-control" id="academicRank" v-model="form.academicRank">
-      <option>Professor</option>
-      <option>Associate Professor</option>
-      <option>Assistant Professor</option>
-      <option>Lecturer</option>
-      <option>Instructor</option>
-    </select>
+    <!-- Academic Rank -->
+    <div class="col-md-4 mb-3">
+      <label for="academicRank">Academic Rank</label>
+      <select class="form-control" id="academicRank" v-model="form.academicRank">
+        <option v-for="rank in academicRanks" :key="rank.id" :value="rank.rank">{{ rank.rank }}</option>
+      </select>
+    </div>
+
+    <!-- University Position -->
+    <div class="col-md-4 mb-3">
+      <label for="universityPosition">University Position</label>
+      <select class="form-control" id="universityPosition" v-model="form.universityPosition">
+        <option v-for="position in universityPositions" :key="position.id" :value="position.position">{{ position.position }}</option>
+      </select>
+    </div>
+
+    <!-- Department -->
+    <div class="col-md-4 mb-3">
+      <label for="department">Department</label>
+      <select class="form-control" id="department" v-model="form.department">
+        <option v-for="department in departments" :key="department.id" :value="department.department">{{ department.department }}</option>
+      </select>
+    </div>
   </div>
 
-  <!-- University Position -->
-  <div class="col-md-4 mb-3">
-    <label for="universityPosition">University Position</label>
-    <select class="form-control" id="universityPosition" v-model="form.universityPosition">
-      <option>Dean</option>
-      <option>Director</option>
-      <option>Coordinator</option>
-      <option>Faculty</option>
-      <option>Staff</option>
-    </select>
-  </div>
-
-  <!-- Department -->
-  <div class="col-md-4 mb-3">
-    <label for="department">Department</label>
-    <select class="form-control" id="department" v-model="form.department">
-      <option>Supply and Property Management Office</option>
-      <option>Physical Plants and Facilities Office</option>
-      <option>General Services Office</option>
-      <option>HRDC Office</option>
-      <option>Medical Service Office</option>
-      <option>Quality Management System on Administrative Services Office</option>
-      <option>Human Resource Management Office</option>
-      <option>IT Support Office</option>
-      <option>Security Office</option>
-      <option>Income Generating Office</option>
-      <option>Integrated Multimedia Office</option>
-      <option>Housing Service Office</option>
-      <option>Accounting Office</option>
-      <option>Budget Office</option>
-      <option>Cash Management Office</option>
-      <option>Guidance Office</option>
-      <option>Sports Development Office</option>
-      <option>Student Organization and Services Office</option>
-      <option>Scholarship and Financial Assistance Office</option>
-      <option>Students with Special Needs Office</option>
-      <option>Students Performing Arts Office</option>
-      <option>Office of the Vice President for Research, Innovation and Extension</option>
-      <option>Research Ethics Office</option>
-      <option>Community Extension Services Office</option>
-      <option>Curriculum Development Office</option>
-    </select>
-  </div>
-</div>
 
       <!-- Address and Profile Image -->
       <div class="row">
@@ -231,9 +200,7 @@
 </template>
 
 <script>
-
 export default {
-
   data() {
     return {
       form: {
@@ -267,7 +234,6 @@ export default {
         residential_province: '',
         residential_country: '',
         residential_zipcode: '',
-        
       },
       sameAddress: false,
       errors: {
@@ -275,17 +241,19 @@ export default {
         firstName: '',
         middleName: '',
       },
+      academicRanks: [],
+      universityPositions: [],
+      departments: [],
     };
   },
   methods: {
     validateName(field) {
-    // Adjusted regex to allow specific Latin letters and disallow special characters
-    const nameRegex = /^[A-Za-zñÑṳṵ\s]+$/; // Add any other characters you want to allow
-    if (!nameRegex.test(this.form[field])) {
-      this.errors[field] = 'Only letters and spaces are allowed.';
-    } else {
-      this.errors[field] = '';
-    }
+      const nameRegex = /^[A-Za-zñÑṳṵ\s]+$/;
+      if (!nameRegex.test(this.form[field])) {
+        this.errors[field] = 'Only letters and spaces are allowed.';
+      } else {
+        this.errors[field] = '';
+      }
     },
     autoFillResidentialAddress() {
       if (this.sameAddress) {
@@ -296,13 +264,27 @@ export default {
         this.form.residential_country = this.form.permanent_country;
         this.form.residential_zipcode = this.form.permanent_zipcode;
       } else {
-        // Clear residential fields if unchecked
         this.form.residential_street = '';
         this.form.residential_barangay = '';
         this.form.residential_city = '';
         this.form.residential_province = '';
         this.form.residential_country = '';
         this.form.residential_zipcode = '';
+      }
+    },
+    async fetchDropdownData() {
+      try {
+        const [ranksResponse, positionsResponse, departmentsResponse] = await Promise.all([
+          this.$axios.get('/api/admin/list/academic-ranks'),
+          this.$axios.get('/api/admin/list/university-positions'),
+          this.$axios.get('/api/admin/list/departments'),
+        ]);
+
+        this.academicRanks = ranksResponse.data;
+        this.universityPositions = positionsResponse.data;
+        this.departments = departmentsResponse.data;
+      } catch (error) {
+        console.error('Error fetching dropdown data:', error);
       }
     },
     onFileChange(event) {
@@ -317,7 +299,6 @@ export default {
         formData.append(key, this.form[key]);
       });
 
-      // Make your API call to save the employee data
       this.$axios.post('/api/admin/employees', formData)
         .then(response => {
           console.log('Employee added successfully', response.data);
@@ -346,6 +327,7 @@ export default {
         taxId: '',
         academicRank: '',
         universityPosition: '',
+        department: '',
         permanent_street: '',
         permanent_barangay: '',
         permanent_city: '',
@@ -358,7 +340,6 @@ export default {
         residential_province: '',
         residential_country: '',
         residential_zipcode: '',
-        department: '',
       };
       this.sameAddress = false;
       this.errors = {
@@ -368,8 +349,12 @@ export default {
       };
     },
   },
+  mounted() {
+    this.fetchDropdownData();
+  },
 };
 </script>
+
 
 <style scoped>
 .container {
