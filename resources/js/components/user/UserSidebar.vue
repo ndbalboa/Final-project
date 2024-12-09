@@ -47,11 +47,6 @@
           <i class="bi bi-person-fill me-2"></i> User Profile
         </router-link>
       </li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="/user-dashboard/mail">
-          <i class="bi bi-envelope-fill me-2"></i> Mail
-        </router-link>
-      </li>
       <li class="nav-item" @click.prevent="toggleSubMenu('settings')">
         <a class="nav-link d-flex align-items-center" :aria-expanded="isSubMenuOpen.settings">
           <i class="bi bi-gear-fill me-2"></i>

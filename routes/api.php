@@ -33,6 +33,8 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/documents/type/{typeName}', [UploadDocumentController::class, 'fetchDocumentsByType']);
     Route::get('/documents/{documentId}', [DocumentController::class, 'getDocumentDetails']);
 
+    Route::get('/all/documents', [DocumentController::class, 'getAllDocuments']);
+
     Route::get('/upload/document-types', [UploadDocumentController::class, 'getDocumentTypes']);
     Route::post('/upload/documents', [UploadDocumentController::class, 'uploadDocument']);
 
@@ -117,10 +119,18 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/departments', [DepartmentController::class, 'index']);
     Route::put('/update/departments/{id}', [DepartmentController::class, 'update']);
     Route::delete('/delete/departments/{id}', [DepartmentController::class, 'destroy']);
+    Route::get('/department/document-type-counts', [DepartmentController::class, 'getDocumentTypeCounts']);
+
+    Route::get('/accounts/departments', [DepartmentController::class, 'fetchDepartments']);
+    Route::get('/accounts/department-accounts/{id}', [DepartmentController::class, 'showDepartment']);
+    Route::delete('/accounts/department-accounts/{id}', [DepartmentController::class, 'deleteAccount']);
 
     Route::get('/list/academic-ranks', [EmployeeController::class, 'listRanks']);
     Route::get('/list/university-positions', [EmployeeController::class, 'getUniversityPositions']);
     Route::get('/list/departments', [EmployeeController::class, 'getDepartments']);
+
+    Route::get('/departments/{id}/thisdocuments', [DocumentController::class, 'getDocumentsByDepartment']);
+    Route::get('/thisdepartments', [DocumentController::class, 'getDepartments']);
 
     //for backup
     Route::post('/backup-database', [DatabaseBackupController::class, 'backup']);

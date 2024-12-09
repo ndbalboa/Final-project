@@ -33,7 +33,7 @@
             <i class="fas fa-envelope fa-3x me-3"></i>
             <div>
               <h5>Number of Mails</h5>
-              <h2>50</h2>
+              <h2>0</h2>
               <a href="#" class="btn btn-outline-light btn-sm mt-3">View Details</a>
             </div>
           </div>

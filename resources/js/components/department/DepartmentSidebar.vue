@@ -7,13 +7,8 @@
         </router-link>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" to="">
-          <i class="bi bi-printer me-2"></i> Scan Document
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="/department-dashboard/upload-document">
-          <i class="bi bi-upload me-2"></i> Upload Document
+        <router-link class="nav-link" to="/department-dashboard/scan-document">
+          <i class="bi bi-upload me-2"></i> Scan Document
         </router-link>
       </li>
       <li class="nav-item">
@@ -56,28 +51,6 @@
         </transition>
       </li>
 
-<li class="nav-item" @click.prevent="toggleMailsSubMenu">
-  <a class="nav-link d-flex align-items-center">
-    <i class="bi bi-folder2-open me-2"></i>
-    <span>Mails</span>
-    <i :class="['bi', isMailsSubMenuOpen ? 'bi-caret-down-fill' : 'bi-caret-left-fill', 'ms-auto']"></i>
-  </a>
-
-<transition name="slide-fade">
-  <ul v-show="isMailsSubMenuOpen" class="nav flex-column ms-3 submenu">
-    <li class="nav-item">
-      <router-link class="nav-link" to="department-dashboard/mail/new">
-        <i class="bi bi-file-earmark-text me-2"></i> Record Mail
-      </router-link>
-    </li>
-    <li class="nav-item">
-      <router-link class="nav-link" to="department-dashboard/mail/list">
-        <i class="bi bi-file-earmark-text me-2"></i> Mails List 
-      </router-link>
-    </li>
-  </ul>
-</transition>
-</li>
       <li class="nav-item" @click.prevent="toggleSettingsSubMenu">
         <a class="nav-link d-flex align-items-center">
           <i class="bi bi-gear-fill me-2"></i>
@@ -86,11 +59,6 @@
         </a>
         <transition name="slide-fade">
           <ul v-show="isSettingsSubMenuOpen" class="nav flex-column ms-3 submenu">
-            <li class="nav-item">
-              <router-link class="nav-link" to="">
-                Document Types
-              </router-link>
-            </li>
             <li class="nav-item">
               <router-link class="nav-link" to="department-dashboard/settings">
                 Settings
@@ -117,15 +85,11 @@ export default {
     return {
       isDocumentsSubMenuOpen: false,
       isSettingsSubMenuOpen: false,
-      isMailsSubMenuOpen:false,
     };
   },
   methods: {
     toggleDocumentsSubMenu() {
       this.isDocumentsSubMenuOpen = !this.isDocumentsSubMenuOpen;
-    },
-    toggleMailsSubMenu() {
-      this.isMailsSubMenuOpen = !this.isMailsSubMenuOpen;
     },
     toggleSettingsSubMenu() {
       this.isSettingsSubMenuOpen = !this.isSettingsSubMenuOpen;

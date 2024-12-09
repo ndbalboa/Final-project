@@ -70,6 +70,20 @@ import DepartmentOffice from '../components/department/DepartmentOffice.vue';
 import AcademicRank from '../components/admin/employees/AcademicRank.vue';
 import UniversityPosition from '../components/admin/employees/UniversityPosition.vue';
 import Departments from '../components/admin/employees/Departments.vue';
+import BudgetCircular from '../components/admin/documents/BudgetCircular.vue';
+import CHEDCircular from '../components/admin/documents/CHEDCircular.vue';
+import COACircular from '../components/admin/documents/COACircular.vue';
+import NoticeofMeeting from '../components/admin/documents/NoticeofMeeting.vue';
+import AllDocuments from '../components/admin/documents/OtherDocuments.vue';
+
+import SecPageBudgetCircular from '../components/admin/documents/BudgetCircular.vue';
+import SecPageCHEDCircular from '../components/admin/documents/CHEDCircular.vue';
+import SecPageCOACircular from '../components/admin/documents/COACircular.vue';
+import SecPageNoticeofMeeting from '../components/admin/documents/NoticeofMeeting.vue';
+import SecPageAllDocuments from '../components/admin/documents/OtherDocuments.vue';
+
+import DepartmentAccounts from '../components/admin/employees/DepartmentAccounts.vue';
+import DocumentByUnit from '../components/admin/documents/DocumentByUnit.vue';
 
 function isAuthenticated() {
   return !!localStorage.getItem('token');
@@ -99,6 +113,7 @@ const routes = [
       { path: 'scan-document', component: ScanDocument },
       { path: 'autofill', name: 'Autofill', component: AutoFill, props: true },
       { path: 'search-document', component: SearchDocument },
+      { path: 'documentbyunit', component: DocumentByUnit},
       { path: 'documents/travel-order', component: DocumentsTravelOrder },
       { path: 'documents/office-order', component: DocumentsOfficeOrder },
       { path: 'documents/special-order', component: DocumentsSpecialOrder },
@@ -123,6 +138,12 @@ const routes = [
       { path: 'academicRank/list', name: 'AcademicRankList', component: AcademicRank },
       { path: 'universityPosition/list', name: 'UniversityPositionList', component: UniversityPosition},
       { path: 'departments', name: 'Departments', component: Departments},
+      { path: 'documents/budget-circular', component: BudgetCircular},
+      { path: 'documents/ched-circular', component: CHEDCircular},
+      { path: 'documents/coa-circular', component: COACircular},
+      { path: 'documents/notice-of-meeting', component: NoticeofMeeting},
+      { path: 'documents/others', component: AllDocuments},
+      { path: 'departmentaccounts', component: DepartmentAccounts}
 
 
     ],
@@ -164,6 +185,11 @@ const routes = [
       { path: 'mail/new', component: SecPageNewMail },
       { path: 'adddocumenttype', component: SecPageAddDocumentType},
       { path: 'settings', component: Settings },
+      { path: 'documents/budget-circular', component: SecPageBudgetCircular},
+      { path: 'documents/ched-circular', component: SecPageCHEDCircular},
+      { path: 'documents/coa-circular', component: SecPageCOACircular},
+      { path: 'documents/notice-of-meeting', component: SecPageNoticeofMeeting},
+      { path: 'documents/others', component: SecPageAllDocuments},
       
     ],
   },
@@ -183,7 +209,8 @@ const routes = [
         { path: 'department/documents/special-order', component: DepartmentSpecial },
         { path: 'department/documents/office-order', component: DepartmentOffice },
         { path: 'department/documents/others', component: DepartmentOtherDocuments },
-        { path: 'upload-document', component: DepartmentUploadDocument },
+        { path: 'scan-document', component: ScanDocument },
+        { path: 'autofill', name: 'Autofill', component: AutoFill, props: true },
         { path: 'documents/:id', name: 'DepartmentDocumentDetails', component: DocumentDetails},
         { path: 'mail/list', component: MailList },
         { path: 'mail/new', component: NewMail },

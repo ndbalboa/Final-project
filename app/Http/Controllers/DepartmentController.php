@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\User;
 use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 use Illuminate\Http\Request;
 
@@ -143,5 +144,93 @@ class DepartmentController extends Controller
             ], 500);
         }
     }
+
+    public function getDocumentTypeCounts(Request $request)
+{
+    // Get the authenticated user's department
+    $department = auth()->user()->department;
+
+    if (!$department) {
+        return response()->json(['error' => 'User does not belong to a department'], 403);
+    }
+
+    // Fetch employee names from the specified department
+    $employeeNames = Employee::where('department', $department)
+        ->pluck(\DB::raw('CONCAT(firstName, " ", lastName)'))
+        ->toArray();
+
+    // Fetch documents associated with these employee names
+    $documents = Document::where(function ($query) use ($employeeNames) {
+        foreach ($employeeNames as $name) {
+            $query->orWhereJsonContains('employee_names', $name);
+        }
+    })->get();
+
+    // Count the documents per document type
+    $documentTypeCounts = $documents->groupBy('document_type_id')
+        ->map(function ($group) {
+            return $group->count();
+        });
+
+    // Fetch the document type names for the counts
+    $documentTypes = DocumentType::whereIn('id', $documentTypeCounts->keys())->pluck('document_type', 'id');
+
+    // Prepare response data with document type names
+    $result = $documentTypeCounts->mapWithKeys(function ($count, $typeId) use ($documentTypes) {
+        return [$documentTypes[$typeId] => $count];
+    });
+
+    return response()->json(['documentTypeCounts' => $result]);
+}
+public function getDepartmentAccounts()
+{
+    try {
+        // Get all users where role is 'department'
+        $users = User::where('role', 'department')->get();
+        return response()->json($users, 200);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Error fetching department accounts', 'error' => $e->getMessage()], 500);
+    }
+}
+
+// Method to fetch all department accounts
+    public function fetchDepartments(): JsonResponse
+    {
+        $users = User::where('role', 'department')->get();
+        return response()->json($users);
+    }
+
+    // Method to show details of a single department account
+    public function showDepartment(int $id): JsonResponse
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->role !== 'department') {
+            return response()->json(['error' => 'User not found or not a department account'], 404);
+        }
+        
+        return response()->json($user);
+    }
+
+    // Method to delete a department account
+    public function deleteAccount($id): JsonResponse
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            // Check if the current user is trying to delete their own account
+            if ($user->id === auth()->id()) {
+                return response()->json(['message' => 'You cannot delete your own account'], 400);
+            }
+
+            $user->delete();
+            return response()->json(['message' => 'Account deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred while deleting the account', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+
+
     
 }

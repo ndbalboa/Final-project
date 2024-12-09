@@ -16,19 +16,19 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="addDepartmentModalLabel">Add/Update Department</h5>
+              <h5 class="modal-title" id="addDepartmentModalLabel">Add/Update Office</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form @submit.prevent="submitForm">
                 <div class="form-group">
-                  <label for="department">Department</label>
+                  <label for="department">Office</label>
                   <input
                     type="text"
                     id="department"
                     v-model="department"
                     class="form-control"
-                    placeholder="Enter Department Name"
+                    placeholder="Enter Office Name"
                     required
                   />
                 </div>
@@ -50,11 +50,11 @@
       </div>
   
       <!-- Department Table -->
-      <h3 class="mt-5">Departments</h3>
+      <h3 class="mt-5">Offices</h3>
       <table class="table table-striped">
         <thead>
           <tr class="bg-primary text-white">
-            <th>Department</th>
+            <th>Office</th>
             <th>Actions</th>
           </tr>
         </thead>

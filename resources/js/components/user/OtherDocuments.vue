@@ -45,6 +45,7 @@
           <th>Date Issued</th>
           <th>Subject</th>
           <th>Employee Names</th>
+          <th>Document Type</th>
         </tr>
       </thead>
       <tbody>
@@ -64,6 +65,7 @@
               </li>
             </ul>
           </td>
+          <td>{{ document && document.document_type ? document.document_type.document_type : 'Travel Order'  }}</td>
         </tr>
       </tbody>
     </table>

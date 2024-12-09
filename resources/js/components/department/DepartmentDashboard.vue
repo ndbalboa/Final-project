@@ -22,76 +22,36 @@
           </table>
         </div>
       </div>
-
-      <!-- Mail Section -->
-      <div class="col-lg-4">
-        <div class="card bg-warning text-white">
-          <div class="card-body">
-            <h5>Number of Mails</h5>
-            <h2>50</h2>
-            <a href="#" class="btn btn-outline-light btn-sm mt-3">View Details</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Logged Activities Section -->
-      <div class="col-lg-4">
-        <div class="card bg-danger text-white">
-          <div class="card-body">
-            <h5>Logged Activities Today</h5>
-            <h2>{{ loginCountToday }}</h2>
-            <a href="#" class="btn btn-outline-light btn-sm mt-3">View Details</a>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import moment from 'moment';
 
 export default {
   data() {
     return {
       totalDocuments: 0,
       documentCounts: {}, // Object to hold counts for each document type
-      recentActivities: [],
-      loginCountToday: 0, // Variable to store today's login count
     };
   },
   created() {
     this.fetchDocumentCounts();
-    this.fetchRecentActivities();
   },
   methods: {
     fetchDocumentCounts() {
-      axios.get('/api/documents/counts')
+      axios.get('/api/admin/department/document-type-counts')
         .then(response => {
-          this.totalDocuments = response.data.total; // Update according to the actual response structure
-          this.documentCounts = {}; // Initialize the documentCounts object
-          response.data.counts.forEach(item => {
-            this.documentCounts[item.document_type] = item.count; // Populate the documentCounts object
-          });
+          // Assuming the response structure contains documentTypeCounts with keys as document types
+          this.documentCounts = response.data.documentTypeCounts || {};
+          // Calculate the total number of documents from the documentCounts object
+          this.totalDocuments = Object.values(this.documentCounts).reduce((acc, count) => acc + count, 0);
         })
         .catch(error => {
           console.error("There was an error fetching document counts:", error);
         });
     },
-    fetchRecentActivities() {
-      axios.get('/api/recent-activities')
-        .then(response => {
-          this.recentActivities = response.data.activities; // Update to access activities from the response
-          this.loginCountToday = response.data.login_count_today; // Get today's login count
-        })
-        .catch(error => {
-          console.error("There was an error fetching the recent activities:", error);
-        });
-    },
-    timeAgo(date) {
-      return moment(date).fromNow();
-    }
   }
 };
 </script>

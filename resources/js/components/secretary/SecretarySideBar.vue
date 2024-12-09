@@ -12,11 +12,6 @@
         </router-link>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" to="/secretary-dashboard/upload-document">
-          <i class="bi bi-upload me-2"></i> Upload Document
-        </router-link>
-      </li>
-      <li class="nav-item">
         <router-link class="nav-link" to="/secretary-dashboard/search-document">
           <i class="bi bi-search me-2"></i> Search Document
         </router-link>
@@ -42,6 +37,33 @@
             <li class="nav-item">
               <router-link class="nav-link" to="/secretary-dashboard/documents/special-order">
                 <i class="bi bi-file-earmark-text me-2"></i> Special Order
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/secretary-dashboard/documents/notice-of-meeting">
+                <i class="bi bi-file-earmark-text me-2"></i> Notice of Meeting
+              </router-link>
+            </li>
+            <span>DBM</span>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/secretary-dashboard/documents/budget-circular">
+                <i class="bi bi-file-earmark-text me-2"></i> Budget Circular
+              </router-link>
+            </li>
+            
+            <li class="nav-item">
+              <router-link class="nav-link" to="/secretary-dashboard/documents/ched-circular">
+                <i class="bi bi-file-earmark-text me-2"></i>CHED Circular
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/secretary-dashboard/documents/coa-circular">
+                <i class="bi bi-file-earmark-text me-2"></i> COA Circular
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/secretary-dashboard/documents/others">
+                <i class="bi bi-file-earmark-text me-2"></i> Others
               </router-link>
             </li>
           </ul>
@@ -134,11 +156,6 @@
         </a>
         <transition name="slide-fade">
           <ul v-show="isSettingsSubMenuOpen" class="nav flex-column ms-3 submenu">
-            <li class="nav-item">
-              <router-link class="nav-link" to="secretary-dashboard/adddocumenttype">
-                Document Types
-              </router-link>
-            </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/secretary-dashboard/universityPosition/list">
                 University Position

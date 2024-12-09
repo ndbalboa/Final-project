@@ -18,7 +18,7 @@ class CreateDocumentsTable extends Migration
             $table->string('to_date')->nullable();
             $table->string('venue')->nullable();
             $table->string('destination')->nullable();
-            $table->string('subject')->nullable();
+            $table->text('subject')->nullable();
             $table->text('description')->nullable();
             $table->json('employee_names')->nullable();
             $table->json('student_names')->nullable();

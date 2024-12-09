@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\DocumentType;
+use App\Models\Department;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -99,9 +100,6 @@ class DocumentController extends Controller
                 $document->employee_names = $validatedData['employee_names'];
                 $document->save();
             }
-    
-            // Send feedback to Flask API
-            Http::post('http://localhost:5000/api/admin/feedback', $validatedData);
     
             return response()->json([
                 'message' => 'Document saved successfully.',
@@ -256,20 +254,21 @@ class DocumentController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated.'], 401);
             }
-
+    
             Log::debug('Authenticated user:', ['user' => $user]);
-
+    
             // Concatenate the first and last names to form the full name
             $userFullName = $user->firstName . ' ' . $user->lastName;
             Log::debug('User full name:', ['full_name' => $userFullName]);
-
+    
             // Query all documents where the employee_names JSON contains the user's full name
-            $documents = Document::whereJsonContains('employee_names', $userFullName)
+            $documents = Document::with('documentType')  // Eager load the related document type
+                ->whereJsonContains('employee_names', $userFullName)
                 ->get();
-
+    
             // Log the documents found
             Log::debug('Documents found:', ['documents' => $documents]);
-
+    
             // Return the documents as a JSON response
             return response()->json($documents);
         } catch (\Exception $e) {
@@ -278,6 +277,7 @@ class DocumentController extends Controller
             return response()->json(['error' => 'An error occurred while fetching documents.'], 500);
         }
     }
+    
 
 
 
@@ -399,9 +399,13 @@ class DocumentController extends Controller
    
     public function getAllDocuments()
     {
-        $documents = Document::all();
+        // Fetch all documents with their associated document type
+        $documents = Document::with('documentType')->get();
+    
+        // Return the documents as JSON
         return response()->json($documents);
     }
+    
  // For the user to search their own documents
  public function userSearch(Request $request)
  {
@@ -589,6 +593,42 @@ public function getDocumentsByLoggedInDepartment()
         \Log::error('Error fetching documents for department: ' . $e->getMessage());
         return response()->json(['error' => 'Internal Server Error'], 500);
     }
+}
+
+public function getDocumentsByDepartment($departmentId)
+{
+    $department = Department::find($departmentId);
+
+    if (!$department) {
+        return response()->json(['message' => 'Department not found'], 404);
+    }
+
+    // Get employees in the department
+    $employees = Employee::where('department', $department->department)
+        ->selectRaw("CONCAT(firstName, ' ', lastName) as full_name")
+        ->pluck('full_name');
+
+    if ($employees->isEmpty()) {
+        return response()->json(['message' => 'No employees found for this department'], 404);
+    }
+
+    // Get documents associated with these employees
+    $documents = Document::whereJsonContains('employee_names', $employees->toArray())->get();
+
+    return response()->json([
+        'department' => $department->department,
+        'documents' => $documents,
+    ]);
+}
+
+
+/**
+ * Get all departments.
+ */
+public function getDepartments()
+{
+    $departments = Department::all();
+    return response()->json($departments);
 }
 
 

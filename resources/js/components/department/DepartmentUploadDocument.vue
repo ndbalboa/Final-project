@@ -1,164 +1,195 @@
 <template>
   <div class="upload-document">
     <h1>Upload Document</h1>
-    <form @submit.prevent="submitDocument">
-      <!-- Document Type -->
-      <div class="form-group">
-        <label for="documentType">Document Type</label>
-        <select v-model="form.documentTypeId" id="documentType" class="form-control" required>
-          <option value="" disabled>Select Document Type</option>
-          <option v-for="type in documentTypes" :key="type.id" :value="type.id">
-            {{ type.document_type }}
-          </option>
-        </select>
-      </div>
+    <div class="form-container">
+      <form @submit.prevent="submitDocument">
+        <!-- Document Type -->
+        <div class="form-group">
+          <label for="documentType">Document Type</label>
+          <select v-model="form.documentTypeId" id="documentType" class="form-control" required>
+            <option value="" disabled>Select Document Type</option>
+            <option v-for="type in documentTypes" :key="type.id" :value="type.id">
+              {{ type.document_type }}
+            </option>
+          </select>
+        </div>
 
-      <!-- File Upload -->
-      <div class="form-group">
-        <label for="file">File</label>
-        <input
-          type="file"
-          id="file"
-          class="form-control"
-          @change="onFileChange"
-          required
-        />
-      </div>
-
-      <!-- Additional Fields -->
-      <div v-if="form.documentTypeId">
+        <!-- File Upload -->
         <div class="form-group">
-          <label for="documentNo">Document Number</label>
+          <label for="file">File</label>
           <input
-            type="text"
-            id="documentNo"
+            type="file"
+            id="file"
             class="form-control"
-            v-model="form.documentNo"
-          />
-        </div>
-        <div class="form-group">
-          <label for="seriesNo">Series Number</label>
-          <input
-            type="text"
-            id="seriesNo"
-            class="form-control"
-            v-model="form.seriesNo"
-          />
-        </div>
-        <div class="form-group">
-          <label for="dateIssued">Date Issued</label>
-          <input
-            type="date"
-            id="dateIssued"
-            class="form-control"
-            v-model="form.dateIssued"
-          />
-        </div>
-        <div class="form-group">
-          <label for="fromDate">From Date</label>
-          <input
-            type="date"
-            id="fromDate"
-            class="form-control"
-            v-model="form.fromDate"
-          />
-        </div>
-        <div class="form-group">
-          <label for="toDate">To Date</label>
-          <input
-            type="date"
-            id="toDate"
-            class="form-control"
-            v-model="form.toDate"
+            @change="onFileChange"
+            required
           />
         </div>
 
-        <!-- Conditional Venue and Destination -->
-        <div v-if="isTravelOrder">
+        <!-- Additional Fields -->
+        <div v-if="form.documentTypeId">
           <div class="form-group">
-            <label for="venue">Venue</label>
+            <label for="documentNo">Document Number</label>
             <input
               type="text"
-              id="venue"
+              id="documentNo"
               class="form-control"
-              v-model="form.venue"
+              v-model="form.documentNo"
             />
           </div>
           <div class="form-group">
-            <label for="destination">Destination</label>
+            <label for="seriesNo">Series Number</label>
             <input
               type="text"
-              id="destination"
+              id="seriesNo"
               class="form-control"
-              v-model="form.destination"
+              v-model="form.seriesNo"
             />
+          </div>
+          <div class="form-group">
+            <label for="dateIssued">Date Issued</label>
+            <input
+              type="date"
+              id="dateIssued"
+              class="form-control"
+              v-model="form.dateIssued"
+            />
+          </div>
+          <div class="form-group">
+            <label for="fromDate">From Date</label>
+            <input
+              type="date"
+              id="fromDate"
+              class="form-control"
+              v-model="form.fromDate"
+            />
+          </div>
+          <div class="form-group">
+            <label for="toDate">To Date</label>
+            <input
+              type="date"
+              id="toDate"
+              class="form-control"
+              v-model="form.toDate"
+            />
+          </div>
+
+          <!-- Conditional Venue and Destination -->
+          <div v-if="isTravelOrder">
+            <div class="form-group">
+              <label for="venue">Venue</label>
+              <input
+                type="text"
+                id="venue"
+                class="form-control"
+                v-model="form.venue"
+              />
+            </div>
+            <div class="form-group">
+              <label for="destination">Destination</label>
+              <input
+                type="text"
+                id="destination"
+                class="form-control"
+                v-model="form.destination"
+              />
+            </div>
+          </div>
+
+          <!-- Employee Names -->
+          <div class="form-group">
+            <label>Employee Names:</label>
+            <transition-group name="fade">
+              <div
+                v-for="(employee, index) in form.employeeNames"
+                :key="index"
+                class="name-group"
+              >
+                <input
+                  type="text"
+                  v-model="form.employeeNames[index]"
+                  class="form-control"
+                  placeholder="Enter employee name"
+                />
+                <button
+                  type="button"
+                  class="btn-remove"
+                  @click="removeEmployee(index)"
+                >
+                  <i class="fas fa-minus-circle"></i>
+                </button>
+              </div>
+            </transition-group>
+            <button
+              type="button"
+              class="btn-add"
+              @click="addEmployee"
+            >
+              <i class="fas fa-plus-circle"></i>
+            </button>
+          </div>
+
+          <!-- Student Names -->
+          <div class="form-group">
+            <label>Student Names:</label>
+            <transition-group name="fade">
+              <div
+                v-for="(student, index) in form.studentNames"
+                :key="index"
+                class="name-group"
+              >
+                <input
+                  type="text"
+                  v-model="form.studentNames[index]"
+                  class="form-control"
+                  placeholder="Enter student name"
+                />
+                <button
+                  type="button"
+                  class="btn-remove"
+                  @click="removeStudent(index)"
+                >
+                  <i class="fas fa-minus-circle"></i>
+                </button>
+              </div>
+            </transition-group>
+            <button
+              type="button"
+              class="btn-add"
+              @click="addStudent"
+            >
+              <i class="fas fa-plus-circle"></i>
+            </button>
+          </div>
+
+          <!-- Subject and Description -->
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input
+              type="text"
+              id="subject"
+              class="form-control"
+              v-model="form.subject"
+            />
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              class="form-control"
+              v-model="form.description"
+            ></textarea>
           </div>
         </div>
 
-        <!-- Employee Names -->
-        <div class="form-group">
-          <label>Employee Names:</label>
-          <div
-            v-for="(employee, index) in form.employeeNames"
-            :key="index"
-            class="name-group"
-          >
-            <input
-              type="text"
-              v-model="form.employeeNames[index]"
-              class="form-control"
-              placeholder="Enter employee name"
-            />
-            <button type="button" @click="removeEmployee(index)">Remove</button>
-          </div>
-          <button type="button" @click="addEmployee">Add Employee</button>
-        </div>
-
-        <!-- Student Names -->
-        <div class="form-group">
-          <label>Student Names:</label>
-          <div
-            v-for="(student, index) in form.studentNames"
-            :key="index"
-            class="name-group"
-          >
-            <input
-              type="text"
-              v-model="form.studentNames[index]"
-              class="form-control"
-              placeholder="Enter student name"
-            />
-            <button type="button" @click="removeStudent(index)">Remove</button>
-          </div>
-          <button type="button" @click="addStudent">Add Student</button>
-        </div>
-
-        <!-- Subject and Description -->
-        <div class="form-group">
-          <label for="subject">Subject</label>
-          <input
-            type="text"
-            id="subject"
-            class="form-control"
-            v-model="form.subject"
-          />
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea
-            id="description"
-            class="form-control"
-            v-model="form.description"
-          ></textarea>
-        </div>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Upload</button>
-    </form>
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
+// Importing Font Awesome for icons
 import axios from "axios";
 
 export default {
@@ -281,13 +312,77 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .upload-document {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease;
 }
+
+.form-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 .form-group {
   margin-bottom: 1rem;
+}
+
+.name-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.name-group input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.btn-add,
+.btn-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #007bff;
+  vertical-align: middle;
+}
+
+.btn-add {
+  margin-top: 10px;
+  display: block;
+  text-align: center;
+}
+
+.btn-remove {
+  margin-left: 10px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

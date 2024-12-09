@@ -1,6 +1,6 @@
 <template>
     <div class="create-department">
-      <h2>Create Department Account</h2>
+      <h2>Create Office Account</h2>
       <form @submit.prevent="createDepartment" class="create-department-form">
         <div class="row">
           <div class="col-md-4 mb-3">
@@ -45,7 +45,7 @@
             />
           </div>
           <div class="col-md-4 mb-3">
-            <label for="department">Department</label>
+            <label for="department">Office</label>
             <select class="form-control" id="department" v-model="department">
               <option v-for="dept in departments" :key="dept.id" :value="dept.department">{{ dept.department }}</option>
             </select>
@@ -122,7 +122,7 @@
             role: "department", // Explicitly setting role for department
           });
   
-          this.successMessage = "Department account created successfully.";
+          this.successMessage = "Unit account created successfully.";
           this.errorMessage = "";
           this.clearForm(); // Optional: Clear form fields after successful creation
         } catch (error) {

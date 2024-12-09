@@ -150,7 +150,7 @@ export default {
         console.error('File path is undefined');
         return '';
       }
-      return `${this.appUrl}/storage/${filePath}`;
+      return `${this.appUrl}${filePath}`;
     },
     viewFile() {
       const fileUrl = this.getFileUrl(this.document.file_path);

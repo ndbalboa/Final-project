@@ -12,11 +12,6 @@
         </router-link>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" to="/admin-dashboard/upload-document">
-          <i class="bi bi-upload me-2"></i> Upload Document
-        </router-link>
-      </li>
-      <li class="nav-item">
         <router-link class="nav-link" to="/admin-dashboard/search-document">
           <i class="bi bi-search me-2"></i> Search Document
         </router-link>
@@ -47,45 +42,32 @@
                 <i class="bi bi-file-earmark-text me-2"></i> Special Order
               </router-link>
             </li>
+
+            <li class="nav-item">
+              <router-link class="nav-link" to="/admin-dashboard/documents/notice-of-meeting">
+                <i class="bi bi-file-earmark-text me-2"></i> Notice of Meeting
+              </router-link>
+            </li>
             <span>DBM</span>
             <li class="nav-item">
-              <router-link class="nav-link" to="/admin-dashboard/documents/travel-order">
-                <i class="bi bi-file-earmark-text me-2"></i> SARO
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin-dashboard/documents/office-order">
-                <i class="bi bi-file-earmark-text me-2"></i> NCA
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin-dashboard/documents/special-order">
+              <router-link class="nav-link" to="/admin-dashboard/documents/budget-circular">
                 <i class="bi bi-file-earmark-text me-2"></i> Budget Circular
               </router-link>
             </li>
+            
             <li class="nav-item">
-              <router-link class="nav-link" to="/admin-dashboard/documents/travel-order">
-                <i class="bi bi-file-earmark-text me-2"></i> Circular Letter
+              <router-link class="nav-link" to="/admin-dashboard/documents/ched-circular">
+                <i class="bi bi-file-earmark-text me-2"></i>CHED Circular
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/admin-dashboard/documents/office-order">
-                <i class="bi bi-file-earmark-text me-2"></i> Advice of NCA Issued
+              <router-link class="nav-link" to="/admin-dashboard/documents/coa-circular">
+                <i class="bi bi-file-earmark-text me-2"></i> COA Circular
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/admin-dashboard/documents/special-order">
-                <i class="bi bi-file-earmark-text me-2"></i> Advisory
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin-dashboard/documents/travel-order">
-                <i class="bi bi-file-earmark-text me-2"></i> Joint Circular
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin-dashboard/documents/office-order">
-                <i class="bi bi-file-earmark-text me-2"></i> Memorandum Circular
+              <router-link class="nav-link" to="/admin-dashboard/documents/others">
+                <i class="bi bi-file-earmark-text me-2"></i> Others
               </router-link>
             </li>
           </ul>
@@ -195,12 +177,12 @@
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/admin-dashboard/createdepartment">
-                Create Department Account
+                Create Office Account
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/admin-dashboard/adddocumenttype">
-                Document Types
+              <router-link class="nav-link" to="/admin-dashboard/departmentaccounts">
+                Office Accounts
               </router-link>
             </li>
             <li class="nav-item">
