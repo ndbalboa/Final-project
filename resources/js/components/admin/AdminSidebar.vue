@@ -187,7 +187,7 @@
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/admin-dashboard/departments">
-                Departments
+                Offices
               </router-link>
             </li>
             <li class="nav-item">
